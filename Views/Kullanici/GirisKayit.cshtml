@@ -1,0 +1,80 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <link href="~/css/GirisKayit.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giriş & Kayıt Formu</title>
+</head>
+<body>
+    <section class="wrapper">
+        
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                Geçersiz giriş bilgileri. Lütfen tekrar deneyin.
+            </div>
+        }
+
+
+        <div class="form signup">
+            <header>Kayıt Ol</header>
+            <form action="/Kullanici/KullaniciOlustur" method="post">
+                <input type="text" placeholder="Ad Soyad" name="TamAd" required>
+                <input type="text" placeholder="Kullanıcı Adı" name="KullaniciAdi" required>
+                <input type="text" placeholder="Email" name="Email" required>
+                <input type="text" placeholder="Telefon No" name="TelefonNo" required>
+                <input type="password" placeholder="Şifre" name="Sifre" required>
+                
+                <div class="checkbox">
+                    <input type="checkbox" id="signupcheckbox">
+                    <label for="signupcheckbox">Tüm şartlar ve koşulları kabul ediyorum</label>
+                </div>
+                <input type="submit" value="Kayıt Ol">
+            </form>
+        </div>
+
+        <div class="form login">
+            <header>Giriş Yap</header>
+            <form action="/Kullanici/Giris" method="post">
+                <input type="text" placeholder="Email / Kullanıcı Adı " name="EmailOrKullaniciAdi" required>
+                <input type="password" placeholder="Şifre" name="Sifre" required>
+                <a href="#">Şifrenizi mi unuttunuz!</a>
+                <input type="submit" value="Giriş Yap">
+            </form>
+        </div>
+    </section>
+
+    <script>
+        const wrapper = document.querySelector(".wrapper"),
+            signupHeader = document.querySelector(".signup header"),
+            loginHeader = document.querySelector(".login header");
+
+        loginHeader.addEventListener("click", () => {
+            wrapper.classList.add("active");
+        });
+
+        signupHeader.addEventListener("click", () => {
+            wrapper.classList.remove("active");
+        });
+        setTimeout(function() {
+        var message = document.querySelector(".alert");
+            if (message) {
+                message.style.display = "none";
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
